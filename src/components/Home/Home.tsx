@@ -3,51 +3,45 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import axios from "axios"
-import { formControlUnstyledClasses } from '@mui/base';
 
 export default function Home() {
     const [stock, setStock] = useState<string>('')
     const [eps, setEps] = useState<string>('')
     const [quarterlyEarningsGrowthYOY, setQuarterlyEarningsGrowthYOY] = useState<string>('')
+    const [priceData, setPriceData] = useState<Object[]>([])
+
+    const getAverages = (data) => {
+        const totalAverages: Object[] = []
+        for (const key in data) {
+            const average = {[key]: data[key]['4. close']}
+            totalAverages.push(average)
+        }
+        const halfLength = Math.ceil(totalAverages.length / 2); 
+        const leftSide = totalAverages.slice(0, halfLength); 
+        setPriceData(leftSide)
+    }
 
     const getStockInfo = (e) => {
         e.preventDefault()
         const stock = e.target.stock.value
         const overviewUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
         const earningsUrl = `https://www.alphavantage.co/query?function=EARNINGS&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
+        const priceUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
 
         axios.all([
             axios.get(overviewUrl), 
-            axios.get(earningsUrl)
+            axios.get(earningsUrl),
+            axios.get(priceUrl)
         ])
-        .then(axios.spread((res1, res2) => {
-            console.log('overview', res1)
+        .then(axios.spread((res1, res2, res3) => {
             setStock(res1.data.Name); 
             setEps(res1.data.EPS); 
             setQuarterlyEarningsGrowthYOY(res1.data.QuarterlyEarningsGrowthYOY); 
-
-            console.log('earnings response: ', res2)
+            getAverages(res3.data["Weekly Time Series"]); 
         }))
         .catch((errors) => {
             console.log(errors)
         })
-
-        // axios.get(overviewUrl).then((res) => {
-        //     console.log(res)
-        //     setStock(res.data.Name); 
-        //     setEps(res.data.EPS); 
-        //     setQuarterlyEarningsGrowthYOY(res.data.QuarterlyEarningsGrowthYOY); 
-        // })
-        // .catch((error) => {
-        //     console.log('error retrieving stock information: ', error)
-        // })
-
-        // axios.get(earningsUrl).then((res) => {
-        //     console.log('earnings response: ', res)
-        // })
-        // .catch((error) => {
-        //     console.log('error retrieving earnings: ', error)
-        // })
     }   
 
     return (
