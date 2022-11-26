@@ -1,3 +1,4 @@
+import React from 'react'
 import './App.css';
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import Home from './components/Home/Home.tsx'

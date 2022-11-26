@@ -10,7 +10,7 @@ export default function Home() {
     const [quarterlyEarningsGrowthYOY, setQuarterlyEarningsGrowthYOY] = useState<string>('')
     const [priceData, setPriceData] = useState<Object[]>([])
 
-    const getAverages = (data) => {
+    const getAverages = (data: any) => {
         const totalAverages: Object[] = []
         for (const key in data) {
             const average = {[key]: data[key]['4. close']}
@@ -21,7 +21,7 @@ export default function Home() {
         setPriceData(leftSide)
     }
 
-    const getStockInfo = (e) => {
+    const getStockInfo = (e: any) => {
         e.preventDefault()
         const stock = e.target.stock.value
         const overviewUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
