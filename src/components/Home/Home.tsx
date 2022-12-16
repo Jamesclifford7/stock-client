@@ -147,11 +147,12 @@ const StyledButton = styled(Button)`
 `
 
 const GraphContainer = styled.div`
-    height: 400px; 
     width: 70%; 
     margin: 0 auto; 
 
     canvas {
         margin: 0 auto; 
+        height: 300px; 
+        width: 600px; 
     }
 `
