@@ -25,6 +25,7 @@ export default function Home() {
     const [priceData, setPriceData] = useState<string[]>([])
 
     const getAverages = (data: any) => {
+        console.log(data)
         const totalAverages: Object[] = []
         const allDates: string[] = []
         const allPrices: string[] = []
@@ -106,7 +107,7 @@ export default function Home() {
 
     return (
         <>
-            <h1>Search for a Stock</h1>
+            <h1>Stock Picker</h1>
             <StyledForm onSubmit={(e) => getStockInfo(e)}>
                 <TextField 
                     id="stock" 
@@ -120,10 +121,12 @@ export default function Home() {
                     Submit
                 </StyledButton>
             </StyledForm>
-            <div>Stock Name: {stock}</div>
-            <div>PE Ratio: {peRatio}</div>
-            <div>Earnings per Share: {eps}</div>
-            <div>Quarterly Earnings Growth Year Over Year: {quarterlyEarningsGrowthYOY}</div>
+            <h2>{stock ?? 'Please search for a stock above'}</h2>
+            <StockInfoContainer>
+                <h3>PR Ratio: {peRatio ? `$${peRatio}` : null}</h3>
+                <h3>Earnings per Share: {eps ? `$${eps}` : null}</h3>
+                <h3>Quarterly Earnings Growth Year Over Year: {quarterlyEarningsGrowthYOY ? `$${quarterlyEarningsGrowthYOY}` : null}</h3>
+            </StockInfoContainer>
             <GraphContainer>
                 <Line options={options} data={data} />
             </GraphContainer>
@@ -139,17 +142,31 @@ const StyledForm = styled.form`
     margin-top: 50px !important; 
 `
 
+const StockInfoContainer = styled.div`
+
+    @media all and (min-width: 640px) {
+        text-align: left; 
+        width: 40%; 
+        margin: 0 auto; 
+    }
+`
+
 const StyledButton = styled(Button)`
     margin-left: 10px !important; 
 `
 
 const GraphContainer = styled.div`
-    width: 70%; 
-    margin: 0 auto; 
+    width: 90%; 
+    margin: 0 auto;
 
-    canvas {
+    @media all and (min-width: 640px) {
+        width: 70%; 
         margin: 0 auto; 
-        height: 300px; 
-        width: 600px; 
+    
+        canvas {
+            margin: 0 auto; 
+            height: 300px !important; 
+            width: 600px !important; 
+        }
     }
 `
