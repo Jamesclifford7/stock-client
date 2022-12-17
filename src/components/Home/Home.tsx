@@ -18,30 +18,26 @@ import {
 
 export default function Home() {
     const [stock, setStock] = useState<string>('')
+    const [peRatio, setPeRatio] = useState<string>('')
     const [eps, setEps] = useState<string>('')
     const [quarterlyEarningsGrowthYOY, setQuarterlyEarningsGrowthYOY] = useState<string>('')
-    // const [priceData, setPriceData] = useState<Object[]>([])
     const [labels, setLabels] = useState<string[]>([])
     const [priceData, setPriceData] = useState<string[]>([])
 
     const getAverages = (data: any) => {
-        console.log('data', data)
         const totalAverages: Object[] = []
         const allDates: string[] = []
         const allPrices: string[] = []
 
         for (const key in data) {
-            // const average = {[key]: data[key]['4. close']}
             const average = {name: key, closingPrice: data[key]['4. close']}
             totalAverages.push(average)
             allDates.push(key)
-            allPrices.push(data[key]['4. close'])
+            allPrices.push(data[key]['5. adjusted close'])
         }
-        //const halfLength = Math.ceil(totalAverages.length / 2); 
-        //const leftSide = totalAverages.slice(0, halfLength); 
-        // setPriceData(leftSide.reverse())
-        setLabels(allDates)
-        setPriceData(allPrices)
+
+        setLabels(allDates.reverse())
+        setPriceData(allPrices.reverse())
     }
 
     const getStockInfo = (e: any) => {
@@ -49,7 +45,7 @@ export default function Home() {
         const stock = e.target.stock.value
         const overviewUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
         const earningsUrl = `https://www.alphavantage.co/query?function=EARNINGS&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
-        const priceUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
+        const priceUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
 
         axios.all([
             axios.get(overviewUrl), 
@@ -57,10 +53,12 @@ export default function Home() {
             axios.get(priceUrl)
         ])
         .then(axios.spread((res1, res2, res3) => {
+            console.log(res1)
+            setPeRatio(res1.data.PERatio)
             setStock(res1.data.Name); 
             setEps(res1.data.EPS); 
             setQuarterlyEarningsGrowthYOY(res1.data.QuarterlyEarningsGrowthYOY); 
-            getAverages(res3.data["Weekly Time Series"]); 
+            getAverages(res3.data["Monthly Adjusted Time Series"]); 
         }))
         .catch((errors) => {
             console.log(errors)
@@ -87,20 +85,18 @@ export default function Home() {
           },
           title: {
             display: true,
-            text: 'Chart.js Line Chart',
+            text: `${stock}`
           },
         },
       };
 
-    // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
     const data = {
       labels,
       datasets: [
             {
             fill: true,
-            label: 'Dataset 2',
-            // data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+            label: 'Price',
             data: priceData,
             borderColor: 'rgb(53, 162, 235)',
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
@@ -125,6 +121,7 @@ export default function Home() {
                 </StyledButton>
             </StyledForm>
             <div>Stock Name: {stock}</div>
+            <div>PE Ratio: {peRatio}</div>
             <div>Earnings per Share: {eps}</div>
             <div>Quarterly Earnings Growth Year Over Year: {quarterlyEarningsGrowthYOY}</div>
             <GraphContainer>
