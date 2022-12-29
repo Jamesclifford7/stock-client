@@ -1,7 +1,8 @@
 import React from 'react'
 import './App.css';
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom'
 import Home from './components/Home/Home.tsx'
+import Login from './components/Login/Login.tsx'
 
 function App() {
   return (
@@ -11,24 +12,42 @@ function App() {
           path="/home"
           element={<Home />}
         />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
       </Routes>
     </div>
   );
 }
 
 const withRouter = (Component) => {
-  const Wrapper = (props) => {
-    const history = useNavigate();
+  // const Wrapper = (props) => {
+  //   const history = useNavigate();
     
+  //   return (
+  //     <Component
+  //       history={history}
+  //       {...props}
+  //       />
+  //   );
+  // };
+  
+  // return Wrapper;
+  
+  function ComponentWithRouterProp(props) {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
     return (
       <Component
-        history={history}
         {...props}
-        />
+        router={{ location, navigate, params }}
+      />
     );
-  };
-  
-  return Wrapper;
+  }
+
+  return ComponentWithRouterProp;
 }
 
 export default withRouter(App);

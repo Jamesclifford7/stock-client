@@ -25,7 +25,6 @@ export default function Home() {
     const [priceData, setPriceData] = useState<string[]>([])
 
     const getAverages = (data: any) => {
-        console.log(data)
         const totalAverages: Object[] = []
         const allDates: string[] = []
         const allPrices: string[] = []
@@ -44,9 +43,9 @@ export default function Home() {
     const getStockInfo = (e: any) => {
         e.preventDefault()
         const stock = e.target.stock.value
-        const overviewUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
-        const earningsUrl = `https://www.alphavantage.co/query?function=EARNINGS&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
-        const priceUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stock}&apikey=TJCK4R5BLXT1IJGB`
+        const overviewUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stock}&apikey=${process.env.AV_API_KEY}`
+        const earningsUrl = `https://www.alphavantage.co/query?function=EARNINGS&symbol=${stock}&apikey=${process.env.AV_API_KEY}`
+        const priceUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stock}&apikey=${process.env.AV_API_KEY}`
 
         axios.all([
             axios.get(overviewUrl), 
@@ -54,7 +53,6 @@ export default function Home() {
             axios.get(priceUrl)
         ])
         .then(axios.spread((res1, res2, res3) => {
-            console.log(res1)
             setPeRatio(res1.data.PERatio)
             setStock(res1.data.Name); 
             setEps(res1.data.EPS); 
@@ -110,7 +108,7 @@ export default function Home() {
             <h1>Stock Picker</h1>
             <StyledForm onSubmit={(e) => getStockInfo(e)}>
                 <TextField 
-                    id="stock" 
+                    name="stock"
                     label="Stock Name" 
                     variant="outlined" 
                 />
