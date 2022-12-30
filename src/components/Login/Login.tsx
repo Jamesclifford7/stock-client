@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 interface LoginProps {
     email: string
@@ -10,7 +11,8 @@ interface LoginProps {
 }
 
 export default function Login() {
-    const [user, setUser] = useState<object>()
+    const [userNotFoundMessage, setUserNotFoundMessage] = useState<string>()
+    const navigate = useNavigate()
 
     const handleLogin = (e: any) => {
         e.preventDefault()
@@ -29,7 +31,17 @@ export default function Login() {
             },
         })
         .then((res) => {
-            setUser(res.data[0])
+            if (res.data === "User not found") {
+                setUserNotFoundMessage("User not found")
+            }
+            
+            const user = {
+                id: res.data[0].id, 
+                email: res.data[0].email,
+            }
+
+            window.localStorage.setItem('user', JSON.stringify(user)); 
+            navigate('/home'); 
         })
         .catch((error) => {
             console.log(error)
@@ -60,6 +72,9 @@ export default function Login() {
                     Submit
                 </Button>
             </form>
+            <UserNotFound 
+                userNotFoundMessage={userNotFoundMessage}
+            />
         </>
     )
 }
@@ -67,3 +82,18 @@ export default function Login() {
 const TextFieldContainer = styled.div`
     margin-bottom: 20px; 
 `
+
+const UserNotFoundContainer = styled.div`
+    margin-top: 20px; 
+`
+
+function UserNotFound(props: {userNotFoundMessage: string | undefined}) {
+
+    if (!props.userNotFoundMessage) {
+        return null
+    }
+
+    return (
+        <UserNotFoundContainer>{props.userNotFoundMessage}</UserNotFoundContainer>
+    )
+}
