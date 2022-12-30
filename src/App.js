@@ -3,20 +3,24 @@ import './App.css';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom'
 import Home from './components/Home/Home.tsx'
 import Login from './components/Login/Login.tsx'
+import UserProvider from './components/UserProvider';
 
 function App() {
+
   return (
     <div className="App">
-      <Routes>
-        <Route 
-          path="/home"
-          element={<Home />}
-        />
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-      </Routes>
+      <UserProvider>
+        <Routes>
+          <Route 
+            path="/home"
+            element={<Home />}
+          />
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+        </Routes>
+      </UserProvider>
     </div>
   );
 }

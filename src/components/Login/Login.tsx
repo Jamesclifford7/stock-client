@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../UserProvider'
 
 interface LoginProps {
     email: string
@@ -13,6 +14,7 @@ interface LoginProps {
 export default function Login() {
     const [userNotFoundMessage, setUserNotFoundMessage] = useState<string>()
     const navigate = useNavigate()
+    const context = useUserContext()
 
     const handleLogin = (e: any) => {
         e.preventDefault()
@@ -41,6 +43,7 @@ export default function Login() {
             }
 
             window.localStorage.setItem('user', JSON.stringify(user)); 
+            context.setUser(user); 
             navigate('/home'); 
         })
         .catch((error) => {

@@ -15,6 +15,7 @@ import {
     Legend,
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
+  import NavBar from '../NavBar/NavBar';
 
 export default function Home() {
     const [stock, setStock] = useState<string>('')
@@ -105,6 +106,7 @@ export default function Home() {
 
     return (
         <>
+            <NavBar />
             <h1>Stock Picker</h1>
             <StyledForm onSubmit={(e) => getStockInfo(e)}>
                 <TextField 
