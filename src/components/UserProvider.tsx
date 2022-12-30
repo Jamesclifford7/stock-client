@@ -1,7 +1,11 @@
 import React, {useState, Dispatch, SetStateAction} from 'react'
 
+interface UserObjectProps {
+    id: number
+    email: string
+}
 interface UserProps {
-    user: object
+    user: UserObjectProps
     setUser: Dispatch<SetStateAction<{}>>
 }
 

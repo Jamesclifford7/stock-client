@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../UserProvider'
-
+import NavBar from '../NavBar/NavBar';
 interface LoginProps {
     email: string
     password: string
@@ -53,6 +53,7 @@ export default function Login() {
 
     return (
         <>
+            <NavBar />
             <h2>Login</h2>
             <form onSubmit={(e) => handleLogin(e)}>
                 <TextFieldContainer>

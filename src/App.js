@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router
 import Home from './components/Home/Home.tsx'
 import Login from './components/Login/Login.tsx'
 import UserProvider from './components/UserProvider';
+import Portfolio from './components/Portfolio/Portfolio';
 
 function App() {
 
@@ -18,6 +19,10 @@ function App() {
           <Route
             path="/login"
             element={<Login />}
+          />
+          <Route
+            path="/portfolio"
+            element={<Portfolio />}
           />
         </Routes>
       </UserProvider>

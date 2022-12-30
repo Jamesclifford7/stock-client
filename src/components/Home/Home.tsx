@@ -24,6 +24,7 @@ export default function Home() {
     const [quarterlyEarningsGrowthYOY, setQuarterlyEarningsGrowthYOY] = useState<string>('')
     const [labels, setLabels] = useState<string[]>([])
     const [priceData, setPriceData] = useState<string[]>([])
+    const [stockErrorMessage, setStockErrorMessage] = useState<string | null>(null)
 
     const getAverages = (data: any) => {
         const totalAverages: Object[] = []
@@ -54,11 +55,21 @@ export default function Home() {
             axios.get(priceUrl)
         ])
         .then(axios.spread((res1, res2, res3) => {
-            setPeRatio(res1.data.PERatio)
-            setStock(res1.data.Name); 
-            setEps(res1.data.EPS); 
-            setQuarterlyEarningsGrowthYOY(res1.data.QuarterlyEarningsGrowthYOY); 
-            getAverages(res3.data["Monthly Adjusted Time Series"]); 
+            if (!res1.data.Name) {
+                setStockErrorMessage('Stock not found')
+                setPeRatio('')
+                setStock(''); 
+                setEps(''); 
+                setQuarterlyEarningsGrowthYOY(''); 
+                getAverages([]); 
+            } else {
+                setStockErrorMessage(null)
+                setPeRatio(res1.data.PERatio)
+                setStock(res1.data.Name); 
+                setEps(res1.data.EPS); 
+                setQuarterlyEarningsGrowthYOY(res1.data.QuarterlyEarningsGrowthYOY); 
+                getAverages(res3.data["Monthly Adjusted Time Series"]); 
+            }
         }))
         .catch((errors) => {
             console.log(errors)
@@ -103,11 +114,10 @@ export default function Home() {
             },
         ]
     };
-
+    
     return (
         <>
             <NavBar />
-            <h1>Stock Picker</h1>
             <StyledForm onSubmit={(e) => getStockInfo(e)}>
                 <TextField 
                     name="stock"
@@ -121,7 +131,7 @@ export default function Home() {
                     Submit
                 </StyledButton>
             </StyledForm>
-            <h2>{stock ?? 'Please search for a stock above'}</h2>
+            <StockNotFound stockErrorMessage={stockErrorMessage} />
             <StockInfoContainer>
                 <h3>PR Ratio: {peRatio ? `$${peRatio}` : null}</h3>
                 <h3>Earnings per Share: {eps ? `$${eps}` : null}</h3>
@@ -135,6 +145,16 @@ export default function Home() {
     )
 }
 
+function StockNotFound(props: {stockErrorMessage: string | null}) {
+    const {stockErrorMessage} = props
+
+    if (!stockErrorMessage) {
+        return null
+    }
+
+    return <h2>{stockErrorMessage}</h2>
+}
+
 const StyledForm = styled.form`
     display: flex; 
     align-items: center; 
@@ -143,7 +163,6 @@ const StyledForm = styled.form`
 `
 
 const StockInfoContainer = styled.div`
-
     @media all and (min-width: 640px) {
         text-align: left; 
         width: 40%; 
