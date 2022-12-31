@@ -15,6 +15,9 @@ import { Line } from 'react-chartjs-2';
 import { StockInfoContainer, GraphContainer } from '../Home/Home';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Button from '@mui/material/Button'
+import { useStocksContext } from '../StocksProvider';
+import { useNavigate } from 'react-router-dom';
 
 export default function Stock() {
     const params = useParams()
@@ -121,6 +124,7 @@ export default function Stock() {
         <>
             <NavBar />
             <h2>{stockName}</h2>
+            <RemoveFromPortfolioPrompt stockSymbol={stockSymbol} />
             <StockInfoContainer>
                 <h3>PR Ratio: {peRatio ? `$${peRatio}` : null}</h3>
                 <h3>Earnings per Share: {eps ? `$${eps}` : null}</h3>
@@ -133,5 +137,55 @@ export default function Stock() {
         </>
     )
 }
+
+function RemoveFromPortfolioPrompt(props: {stockSymbol: string | undefined}) {
+    const {stockSymbol} = props
+    const [isShowingRemoveButton, setIsShowingRemoveButton] = useState(false)
+    const stocksContext = useStocksContext()
+    const stocks = stocksContext.stocks
+    const navigate = useNavigate()
+    
+    // get stock id 
+    const stock = stocks.filter(stock => stock.stock_name === stockSymbol)
+    const stockId = stock[0].id
+
+
+    const deleteStock = () => {
+        axios({
+            method: 'delete', 
+            url: `http://localhost:8000/stocks/${stockId}`, 
+            headers: {
+                'content-type': 'application/json'
+            },
+        })
+        .then((res) => {
+            // update context
+            const updatedStocks = stocks.filter(stock => stock.stock_name !== stockSymbol)
+            stocksContext.setStocks(updatedStocks); 
+
+            alert(res.data); 
+            navigate('/portfolio'); 
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+    if (!isShowingRemoveButton) {
+        return <>
+            <Button onClick={() => setIsShowingRemoveButton(!isShowingRemoveButton)}>Remove from Portfolio</Button>
+        </>
+    }
+
+    return (
+        <>
+            <Button color="error" onClick={() => setIsShowingRemoveButton(!isShowingRemoveButton)}>Remove from Portfolio</Button>
+            <div>Are you sure?</div>
+            <Button color="error" onClick={deleteStock}>Delete Forever</Button>
+        </>
+    )
+}
+
+
 
 
