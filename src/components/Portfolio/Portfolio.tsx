@@ -1,7 +1,8 @@
 import React from 'react'
 import NavBar from '../NavBar/NavBar'
 import { useStocksContext } from '../StocksProvider'
-
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 interface StockProps {
     id: number
     'user_id': string
@@ -15,6 +16,7 @@ export default function Portfolio() {
     return (
         <>
             <NavBar />
+            <h2>My Portfolio</h2>
             <StockList stocks={stocks} />
         </>
     )
@@ -32,12 +34,28 @@ function StockList(props: {stocks: StockProps[]}) {
             {
                 stocks.map((stock, idx) => {
                     return (
-                        <div key={idx}>
-                            <h3>{stock['stock_name']}</h3>
-                        </div>
+                        <Stock key={idx}>
+                            <Link to={`/portfolio/${stock['stock_name']}`}><h3>{stock['stock_name']}</h3></Link>
+                        </Stock>
                     )
                 })
             }
         </>
     )
 }
+
+const Stock = styled.div`
+    margin: 0 auto; 
+    border: solid;
+    border-width: 0.8px; 
+    width: 70%; 
+
+    a {
+        color: black; 
+        text-decoration: none; 
+    }
+
+    a:hover {
+        text-decoration: underline; 
+    }
+`

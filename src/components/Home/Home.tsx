@@ -147,7 +147,6 @@ export default function Home() {
                 <Line options={options} data={data} />
             </GraphContainer>
         </>
-
     )
 }
 
@@ -224,7 +223,7 @@ const StyledForm = styled.form`
     margin-top: 50px !important; 
 `
 
-const StockInfoContainer = styled.div`
+export const StockInfoContainer = styled.div`
     @media all and (min-width: 640px) {
         text-align: left; 
         width: 40%; 
@@ -244,7 +243,7 @@ const StyledPortfolioMessage = styled.p`
     margin-top: 20px; 
 `
 
-const GraphContainer = styled.div`
+export const GraphContainer = styled.div`
     width: 90%; 
     margin: 0 auto;
 

@@ -6,6 +6,7 @@ import Login from './components/Login/Login.tsx'
 import UserProvider from './components/UserProvider';
 import StocksProvider from './components/StocksProvider';
 import Portfolio from './components/Portfolio/Portfolio';
+import Stock from './components/Stock/Stock.tsx'
 
 function App() {
 
@@ -25,6 +26,10 @@ function App() {
             <Route
               path="/portfolio"
               element={<Portfolio />}
+            />
+            <Route 
+              path="/portfolio/:stock_symbol"
+              element={<Stock />}
             />
           </Routes>
         </StocksProvider>
