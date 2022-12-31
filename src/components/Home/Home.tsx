@@ -14,11 +14,14 @@ import {
     Filler,
     Legend,
   } from 'chart.js';
-  import { Line } from 'react-chartjs-2';
-  import NavBar from '../NavBar/NavBar';
+import { Line } from 'react-chartjs-2';
+import NavBar from '../NavBar/NavBar';
+import { useUserContext } from '../UserProvider';
+import { useStocksContext } from '../StocksProvider';
 
 export default function Home() {
-    const [stock, setStock] = useState<string>('')
+    const [stockName, setStockName] = useState<string>('')
+    const [stockSymbol, setStockSymbol] = useState<string>('')
     const [peRatio, setPeRatio] = useState<string>('')
     const [eps, setEps] = useState<string>('')
     const [quarterlyEarningsGrowthYOY, setQuarterlyEarningsGrowthYOY] = useState<string>('')
@@ -56,16 +59,18 @@ export default function Home() {
         ])
         .then(axios.spread((res1, res2, res3) => {
             if (!res1.data.Name) {
-                setStockErrorMessage('Stock not found')
-                setPeRatio('')
-                setStock(''); 
+                setStockErrorMessage('Stock not found');
+                setPeRatio('');
+                setStockName(''); 
+                setStockSymbol(''); 
                 setEps(''); 
                 setQuarterlyEarningsGrowthYOY(''); 
                 getAverages([]); 
             } else {
-                setStockErrorMessage(null)
-                setPeRatio(res1.data.PERatio)
-                setStock(res1.data.Name); 
+                setStockErrorMessage(null);
+                setPeRatio(res1.data.PERatio);
+                setStockName(res1.data.Name); 
+                setStockSymbol(res1.data.Symbol); 
                 setEps(res1.data.EPS); 
                 setQuarterlyEarningsGrowthYOY(res1.data.QuarterlyEarningsGrowthYOY); 
                 getAverages(res3.data["Monthly Adjusted Time Series"]); 
@@ -96,7 +101,7 @@ export default function Home() {
           },
           title: {
             display: true,
-            text: `${stock}`
+            text: `${stockName}`
           },
         },
       };
@@ -121,16 +126,17 @@ export default function Home() {
             <StyledForm onSubmit={(e) => getStockInfo(e)}>
                 <TextField 
                     name="stock"
-                    label="Stock Name" 
+                    label="Stock Symbol" 
                     variant="outlined" 
                 />
-                <StyledButton 
+                <StyledSubmitButton 
                     variant="contained"
                     type="submit"
                 >
                     Submit
-                </StyledButton>
+                </StyledSubmitButton>
             </StyledForm>
+            <AddToPortfolioButton stockSymbol={stockSymbol} />
             <StockNotFound stockErrorMessage={stockErrorMessage} />
             <StockInfoContainer>
                 <h3>PR Ratio: {peRatio ? `$${peRatio}` : null}</h3>
@@ -142,6 +148,36 @@ export default function Home() {
             </GraphContainer>
         </>
 
+    )
+}
+
+function AddToPortfolioButton(props: {stockSymbol: string}) {
+    const {stockSymbol} = props
+    const userContext = useUserContext()
+    const stocks = useStocksContext()
+    const user = userContext.user
+
+    // if no user is logged in and/or no stock has been searched for, we want to hide the button
+    if (!user.id || !stockSymbol) {
+        return null
+    }
+
+    // if user is logged in, we need to check if the stock is already in user's portfolio
+    let stockExists = false
+    for (let i = 0; i < stocks.length; i++) {
+        if (stocks[i].stock_name === stockSymbol) {
+            stockExists = true
+        }
+    }; 
+
+    if (stockExists) {
+        return <StyledPortfolioMessage>(stock is already in your portfolio)</StyledPortfolioMessage>
+    }
+
+    // if it is, make POST request to add to portfolio
+
+    return (
+        <StyledPortfolioButton color="secondary">Add to Portfolio</StyledPortfolioButton>
     )
 }
 
@@ -170,8 +206,16 @@ const StockInfoContainer = styled.div`
     }
 `
 
-const StyledButton = styled(Button)`
+const StyledSubmitButton = styled(Button)`
     margin-left: 10px !important; 
+`
+
+const StyledPortfolioButton = styled(Button)`
+    margin-top: 20px !important; 
+`
+
+const StyledPortfolioMessage = styled.p`
+    margin-top: 20px; 
 `
 
 const GraphContainer = styled.div`
