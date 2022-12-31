@@ -11,8 +11,8 @@ export default function NavBar() {
 
     const handleLogout = (e) => {
         e.preventDefault()
-        setUser()
-        context.setUser()
+        setUser({})
+        context.setUser({})
         window.localStorage.clear(); 
         navigate('/home')
     }

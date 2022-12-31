@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router
 import Home from './components/Home/Home.tsx'
 import Login from './components/Login/Login.tsx'
 import UserProvider from './components/UserProvider';
+import StocksProvider from './components/StocksProvider';
 import Portfolio from './components/Portfolio/Portfolio';
 
 function App() {
@@ -11,20 +12,22 @@ function App() {
   return (
     <div className="App">
       <UserProvider>
-        <Routes>
-          <Route 
-            path="/home"
-            element={<Home />}
-          />
-          <Route
-            path="/login"
-            element={<Login />}
-          />
-          <Route
-            path="/portfolio"
-            element={<Portfolio />}
-          />
-        </Routes>
+        <StocksProvider>
+          <Routes>
+            <Route 
+              path="/home"
+              element={<Home />}
+            />
+            <Route
+              path="/login"
+              element={<Login />}
+            />
+            <Route
+              path="/portfolio"
+              element={<Portfolio />}
+            />
+          </Routes>
+        </StocksProvider>
       </UserProvider>
     </div>
   );

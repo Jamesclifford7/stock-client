@@ -1,8 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import NavBar from '../NavBar/NavBar'
-import { useUserContext } from '../UserProvider'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useStocksContext } from '../StocksProvider'
 
 interface StockProps {
     id: number
@@ -11,31 +9,8 @@ interface StockProps {
 }
 
 export default function Portfolio() {
-    const context = useUserContext()
-    const userId = context.user.id
-    const [stocks, setStocks] = useState<StockProps[]>([])
-    const navigate = useNavigate()
-    
-    useEffect(() => {
-        if (!userId) {
-            navigate('/login')
-            return
-        }
-
-        axios({
-            method: 'get', 
-            url: `http://localhost:8000/stocks/${userId}`, 
-            headers: {
-                'content-type': 'application/json'
-            },
-        })
-        .then((res) => {
-            setStocks(res.data); 
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }, [userId, navigate])
+    const stockContext = useStocksContext()
+    const stocks = stockContext
     
     return (
         <>
@@ -49,7 +24,7 @@ function StockList(props: {stocks: StockProps[]}) {
     const {stocks} = props
 
     if (stocks.length === 0) {
-        return null
+        return <div>Portfolio is Empty</div>
     }
 
     return (

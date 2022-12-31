@@ -29,7 +29,7 @@ export function useUserContext() {
     const context = React.useContext(UserContext)
 
     if (!context) {
-        throw new Error('useUserContext must be used within EditModeProvider')
+        throw new Error('useUserContext must be used within UserProvider')
     }
 
     return context
