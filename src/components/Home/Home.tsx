@@ -154,8 +154,9 @@ export default function Home() {
 function AddToPortfolioButton(props: {stockSymbol: string}) {
     const {stockSymbol} = props
     const userContext = useUserContext()
-    const stocks = useStocksContext()
+    const stocksContext = useStocksContext()
     const user = userContext.user
+    const stocks = stocksContext.stocks
 
     // if no user is logged in and/or no stock has been searched for, we want to hide the button
     if (!user.id || !stockSymbol) {
@@ -175,9 +176,34 @@ function AddToPortfolioButton(props: {stockSymbol: string}) {
     }
 
     // if it is, make POST request to add to portfolio
+    const addToPortfolio = () => {
+        axios({
+            method: 'post', 
+            url: `http://localhost:8000/stocks/${user.id}`, 
+            headers: {
+                'content-type': 'application/json'
+            },
+            data: {
+                stock: stockSymbol
+            },
+        })
+        .then((res) => {
+            stocksContext.setStocks([...stocks, res.data])
+            alert(`${stockSymbol} added to portfolio`)
+        })
+        .catch((error) => {
+            console.log(error)
+        }); 
+
+    }
 
     return (
-        <StyledPortfolioButton color="secondary">Add to Portfolio</StyledPortfolioButton>
+        <StyledPortfolioButton 
+            color="secondary"
+            onClick={addToPortfolio}
+        >
+            Add to Portfolio
+        </StyledPortfolioButton>
     )
 }
 

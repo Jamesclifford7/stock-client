@@ -1,14 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Dispatch, SetStateAction} from 'react'
 import { useUserContext } from './UserProvider'
 import axios from 'axios'
-
 interface StockProps {
     id: number
     'user_id': string
     'stock_name': string
 }
 
-const StocksContext = React.createContext<StockProps[]>([])
+interface StocksProps {
+    stocks: StockProps[]
+    setStocks:  Dispatch<SetStateAction<StockProps[]>>
+}
+
+const StocksContext = React.createContext<StocksProps | undefined>(undefined)
 
 export default function StocksProvider(props: {children: JSX.Element}) {
     const context = useUserContext()
@@ -36,7 +40,10 @@ export default function StocksProvider(props: {children: JSX.Element}) {
     }, [user])
 
     return (
-        <StocksContext.Provider value={stocks}>
+        <StocksContext.Provider value={{
+            stocks, 
+            setStocks
+        }}>
             {props.children}
         </StocksContext.Provider>
     )

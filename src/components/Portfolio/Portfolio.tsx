@@ -10,7 +10,7 @@ interface StockProps {
 
 export default function Portfolio() {
     const stockContext = useStocksContext()
-    const stocks = stockContext
+    const stocks = stockContext.stocks
     
     return (
         <>
