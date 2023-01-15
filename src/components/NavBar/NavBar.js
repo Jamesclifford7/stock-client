@@ -16,7 +16,7 @@ export default function NavBar() {
         window.localStorage.clear(); 
         navigate('/home')
     }
-
+    
     if (!user.id) {
         return (
             <>
@@ -24,7 +24,7 @@ export default function NavBar() {
                     <StyledLink to="/login">Login</StyledLink>
                     <StyledLink to="">Signup</StyledLink>
                 </StyledNav>
-                <Link to="/home"><h1>Stock Analyzer</h1></Link>
+                <StyledLink to="/home"><h1>Stock Analyzer</h1></StyledLink>
             </>
         )
     }
@@ -33,26 +33,57 @@ export default function NavBar() {
         <>
             <StyledNav>
                 <StyledLink to="/portfolio">My Portfolio</StyledLink>
-                <button onClick={e => handleLogout(e)}>Logout</button>
+                <StyledLogout onClick={e => handleLogout(e)}>Logout</StyledLogout>
             </StyledNav>
             <StyledLink to="/home"><h1>Stock Analyzer</h1></StyledLink>
+            <span>Welcome, {user.email}</span>
         </>
     )
 }
 
 const StyledNav = styled.nav`
-    height: 70px; 
+    height: none; 
     display: flex; 
     align-items: center; 
     justify-content: flex-end; 
     border-bottom: solid; 
     border-width: 0.8px; 
+    flex-direction: column; 
 
     a, button {
-        margin-right: 50px; 
+        padding: 25px 0; 
+    }
+
+    @media all and (min-width: 640px)  {
+        flex-direction: row; 
+        align-items: center; 
+        justify-content: flex-end; 
+        height: 70px;
+
+        a, button {
+            margin-right: 50px; 
+        }
     }
 `
 
 const StyledLink = styled(Link)`
     text-decoration: none; 
+    color: #4392F1; 
+    font-size: 16px; 
+
+    &:hover {
+        text-decoration: underline; 
+    }
+`
+
+const StyledLogout = styled.button`
+    background: none; 
+    border: none; 
+    color: #4392F1;
+    font-size: 16px; 
+
+    &:hover {
+        text-decoration: underline; 
+        cursor: pointer; 
+    }
 `

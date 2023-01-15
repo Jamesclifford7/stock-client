@@ -69,12 +69,12 @@ export default function Login() {
                         type='password'
                     />
                 </TextFieldContainer>
-                <Button
+                <StyledButton
                     type="submit"
                     variant='contained'
                 >
                     Submit
-                </Button>
+                </StyledButton>
             </form>
             <UserNotFound 
                 userNotFoundMessage={userNotFoundMessage}
@@ -89,6 +89,10 @@ const TextFieldContainer = styled.div`
 
 const UserNotFoundContainer = styled.div`
     margin-top: 20px; 
+`
+
+const StyledButton = styled(Button)`
+    background-color: #4392F1 !important;
 `
 
 function UserNotFound(props: {userNotFoundMessage: string | undefined}) {

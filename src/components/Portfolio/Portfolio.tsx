@@ -46,8 +46,10 @@ function StockList(props: {stocks: StockProps[]}) {
 
 const Stock = styled.div`
     margin: 0 auto; 
+    margin-bottom: 5px; 
     border: solid;
     border-width: 0.8px; 
+    border-radius: 25px; 
     width: 70%; 
 
     a {

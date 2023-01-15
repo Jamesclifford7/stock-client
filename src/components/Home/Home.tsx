@@ -136,6 +136,7 @@ export default function Home() {
                     Submit
                 </StyledSubmitButton>
             </StyledForm>
+            <StyledStockName>{stockName}</StyledStockName>
             <AddToPortfolioButton stockSymbol={stockSymbol} />
             <StockNotFound stockErrorMessage={stockErrorMessage} />
             <StockInfoContainer>
@@ -197,12 +198,12 @@ function AddToPortfolioButton(props: {stockSymbol: string}) {
     }
 
     return (
-        <StyledPortfolioButton 
+        <Button 
             color="secondary"
             onClick={addToPortfolio}
         >
             Add to Portfolio
-        </StyledPortfolioButton>
+        </Button>
     )
 }
 
@@ -220,7 +221,13 @@ const StyledForm = styled.form`
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    margin-top: 50px !important; 
+    flex-direction: column; 
+    margin-top: 40px !important; 
+
+    @media all and (min-width: 640px) {
+        flex-direction: row; 
+        margin-top: 50px !important;
+    }
 `
 
 export const StockInfoContainer = styled.div`
@@ -233,10 +240,16 @@ export const StockInfoContainer = styled.div`
 
 const StyledSubmitButton = styled(Button)`
     margin-left: 10px !important; 
+    background-color: #4392F1 !important; 
+    margin-top: 10px !important; 
+
+    @media all and (min-width: 640px) {
+        margin-top: 0 !important; 
+    }
 `
 
-const StyledPortfolioButton = styled(Button)`
-    margin-top: 20px !important; 
+const StyledStockName = styled.h2`
+    margin-top: 30px; 
 `
 
 const StyledPortfolioMessage = styled.p`
@@ -246,6 +259,7 @@ const StyledPortfolioMessage = styled.p`
 export const GraphContainer = styled.div`
     width: 90%; 
     margin: 0 auto;
+    padding-bottom: 100px; 
 
     @media all and (min-width: 640px) {
         width: 70%; 
