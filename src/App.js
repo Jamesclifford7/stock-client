@@ -7,6 +7,7 @@ import UserProvider from './components/UserProvider';
 import StocksProvider from './components/StocksProvider';
 import Portfolio from './components/Portfolio/Portfolio';
 import Stock from './components/Stock/Stock.tsx'
+import SignUp from './components/SignUp/SignUp';
 
 function App() {
 
@@ -22,6 +23,10 @@ function App() {
             <Route
               path="/login"
               element={<Login />}
+            />
+            <Route 
+              path="/signup"
+              element={<SignUp />}
             />
             <Route
               path="/portfolio"

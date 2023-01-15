@@ -22,7 +22,7 @@ export default function NavBar() {
             <>
                 <StyledNav>
                     <StyledLink to="/login">Login</StyledLink>
-                    <StyledLink to="">Signup</StyledLink>
+                    <StyledLink to="/signup">Sign Up</StyledLink>
                 </StyledNav>
                 <StyledLink to="/home"><h1>Stock Analyzer</h1></StyledLink>
             </>
