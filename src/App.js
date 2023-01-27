@@ -17,7 +17,7 @@ function App() {
         <StocksProvider>
           <Routes>
             <Route 
-              path="/home"
+              exact path="/"
               element={<Home />}
             />
             <Route
@@ -72,4 +72,6 @@ const withRouter = (Component) => {
   return ComponentWithRouterProp;
 }
 
-export default withRouter(App);
+// export default withRouter(App);
+export default App;
+

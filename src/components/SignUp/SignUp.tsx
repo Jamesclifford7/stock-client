@@ -42,7 +42,7 @@ export default function SignUp() {
 
                 window.localStorage.setItem('user', JSON.stringify(user)); 
                 context.setUser(user); 
-                navigate('/home'); 
+                navigate('/'); 
             }
         })
         .catch((error) => {

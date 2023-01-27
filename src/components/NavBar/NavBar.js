@@ -14,7 +14,7 @@ export default function NavBar() {
         setUser({})
         context.setUser({})
         window.localStorage.clear(); 
-        navigate('/home')
+        navigate('/')
     }
     
     if (!user.id) {
@@ -24,7 +24,7 @@ export default function NavBar() {
                     <StyledLink to="/login">Login</StyledLink>
                     <StyledLink to="/signup">Sign Up</StyledLink>
                 </StyledNav>
-                <StyledLink to="/home"><h1>Stock Analyzer</h1></StyledLink>
+                <StyledLink to="/"><h1>Stock Analyzer</h1></StyledLink>
             </>
         )
     }
@@ -35,7 +35,7 @@ export default function NavBar() {
                 <StyledLink to="/portfolio">My Portfolio</StyledLink>
                 <StyledLogout onClick={e => handleLogout(e)}>Logout</StyledLogout>
             </StyledNav>
-            <StyledLink to="/home"><h1>Stock Analyzer</h1></StyledLink>
+            <StyledLink to="/"><h1>Stock Analyzer</h1></StyledLink>
             <span>Welcome, {user.email}</span>
         </>
     )

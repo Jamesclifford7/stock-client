@@ -19,7 +19,7 @@ import NavBar from '../NavBar/NavBar';
 import { useUserContext } from '../UserProvider';
 import { useStocksContext } from '../StocksProvider';
 
-export default function Home() {
+export default function Home(props: {hideLine?: boolean}) {
     const [stockName, setStockName] = useState<string>('')
     const [stockSymbol, setStockSymbol] = useState<string>('')
     const [peRatio, setPeRatio] = useState<string>('')
@@ -89,10 +89,9 @@ export default function Home() {
         Title,
         Tooltip,
         Filler,
-        Legend
+        Legend, 
       );
-      
-
+    
     const options = {
         responsive: true,
         plugins: {
@@ -145,7 +144,10 @@ export default function Home() {
                 <h3>Quarterly Earnings Growth Year Over Year: {quarterlyEarningsGrowthYOY ? `$${quarterlyEarningsGrowthYOY}` : null}</h3>
             </StockInfoContainer>
             <GraphContainer>
-                <Line options={options} data={data} />
+                {/* a bit hacky, but this ternary prevents Jest from throwing 'React.jsx: type is invalid' due to <Line /> component  */}
+                {
+                    props.hideLine ? null : <Line options={options} data={data} />
+                }
             </GraphContainer>
         </>
     )

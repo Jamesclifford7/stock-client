@@ -44,7 +44,7 @@ export default function Login() {
 
             window.localStorage.setItem('user', JSON.stringify(user)); 
             context.setUser(user); 
-            navigate('/home'); 
+            navigate('/'); 
         })
         .catch((error) => {
             console.log(error)
