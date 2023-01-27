@@ -23,7 +23,7 @@ export default function Login() {
 
         axios({
             method: 'post', 
-            url: 'http://localhost:8000/login', 
+            url: `${process.env.REACT_APP_API_URL}/login`, 
             headers: {
                 'content-type': 'application/json'
             },

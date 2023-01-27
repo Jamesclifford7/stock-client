@@ -153,7 +153,7 @@ function RemoveFromPortfolioPrompt(props: {stockSymbol: string | undefined}) {
     const deleteStock = () => {
         axios({
             method: 'delete', 
-            url: `http://localhost:8000/stocks/${stockId}`, 
+            url: `${process.env.REACT_APP_API_URL}/stocks/${stockId}`, 
             headers: {
                 'content-type': 'application/json'
             },

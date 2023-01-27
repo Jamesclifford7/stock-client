@@ -26,7 +26,7 @@ export default function StocksProvider(props: {children: JSX.Element}) {
         
         axios({
             method: 'get', 
-            url: `http://localhost:8000/stocks/${user.id}`, 
+            url: `${process.env.REACT_APP_API_URL}/stocks/${user.id}`, 
             headers: {
                 'content-type': 'application/json'
             },
