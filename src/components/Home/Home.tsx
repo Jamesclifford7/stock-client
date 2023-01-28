@@ -131,6 +131,7 @@ export default function Home(props: {hideLine?: boolean}) {
                 <StyledSubmitButton 
                     variant="contained"
                     type="submit"
+                    aria-label="submit stock button"
                 >
                     Submit
                 </StyledSubmitButton>
