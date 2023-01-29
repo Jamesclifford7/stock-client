@@ -15,3 +15,12 @@ export const fetchUserPortfolio = async () => {
       return [];
     }
 };
+
+export const fetchUser = async () => {
+  try {
+    return await axios.post(`${process.env.REACT_APP_API_URL}/login`); 
+  } catch (error) {
+    return {};
+  }
+};
+
