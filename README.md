@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Stock Analyzer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://stock-client-tau.vercel.app/
 
-## Available Scripts
+## Summary
 
-In the project directory, you can run:
+Simple web application that allows users to search for relevant stock information for investing purposes (price history, P/E ratio, etc.). Users can also sign up for an account, which enables them to save individual stocks to their portfolio. I built this because I wanted to make something that visualizes data in some way, and that saves user information in local storage. The demo email address is 'gordongekko@gmail.com' and the pasword is 'Password1', and remember that a stock symbol (i.e. 'AAPL,' 'TSLA', etc.) must be entered--NOT a stock name. Enjoy searching!
 
-### `npm start`
+Link to server repo: https://github.com/Jamesclifford7/stock-server
 
-Runs the app in the development mode.\
+Uses Alpha Vantage API for stock information: https://www.alphavantage.co/
+
+## Scripts
+
+`npm start` -- Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+`npm test` -- Launches the test runner in the interactive watch mode.
 
-### `npm test`
+## Screenshots
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Alt](src/screenshots/stock-analyzer-1.png)
 
-### `npm run build`
+![Alt](src/screenshots/stock-analyzer-2.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Built With: 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+React.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+TypeScript
 
-### `npm run eject`
+Material UI
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Styled Components
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

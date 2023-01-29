@@ -79,7 +79,23 @@ export default function Login() {
             <UserNotFound 
                 userNotFoundMessage={userNotFoundMessage}
             />
+            <CredentialsContainer>
+                <h3>Demo Credentials:</h3>
+                <p>Email: gordongekko@gmail.com</p>
+                <p>Password: Password1</p>
+            </CredentialsContainer>
         </>
+    )
+}
+
+function UserNotFound(props: {userNotFoundMessage: string | undefined}) {
+
+    if (!props.userNotFoundMessage) {
+        return null
+    }
+
+    return (
+        <UserNotFoundContainer>{props.userNotFoundMessage}</UserNotFoundContainer>
     )
 }
 
@@ -95,13 +111,16 @@ const StyledButton = styled(Button)`
     background-color: #4392F1 !important;
 `
 
-function UserNotFound(props: {userNotFoundMessage: string | undefined}) {
-
-    if (!props.userNotFoundMessage) {
-        return null
+const CredentialsContainer = styled.div`
+    background-color: #E7E7E7; 
+    padding: 12px; 
+    width: 80%; 
+    border: solid; 
+    border-width: 0.8px; 
+    margin: 0 auto; 
+    margin-top: 20px; 
+    border-radius: 25px; 
+    @media all and (min-width: 640px) {
+        width: 25%;
     }
-
-    return (
-        <UserNotFoundContainer>{props.userNotFoundMessage}</UserNotFoundContainer>
-    )
-}
+`
