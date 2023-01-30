@@ -178,7 +178,7 @@ function AddToPortfolioButton(props: {stockSymbol: string}) {
         return <StyledPortfolioMessage>(stock is already in your portfolio)</StyledPortfolioMessage>
     }
 
-    // if it is, make POST request to add to portfolio
+    // if it isn't in portfolio, make POST request to add
     const addToPortfolio = () => {
         axios({
             method: 'post', 
