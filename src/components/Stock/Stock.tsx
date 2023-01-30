@@ -126,7 +126,7 @@ export default function Stock() {
             <h2>{stockName}</h2>
             <RemoveFromPortfolioPrompt stockSymbol={stockSymbol} />
             <StockInfoContainer>
-                <h3>PR Ratio: {peRatio ? `$${peRatio}` : null}</h3>
+                <h3>PE Ratio: {peRatio ? `$${peRatio}` : null}</h3>
                 <h3>Earnings per Share: {eps ? `$${eps}` : null}</h3>
                 <h3>Quarterly Earnings Growth Year Over Year: {quarterlyEarningsGrowthYOY ? `$${quarterlyEarningsGrowthYOY}` : null}</h3>
             </StockInfoContainer>
